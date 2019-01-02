@@ -2,7 +2,7 @@ package users;
 
 import single_classes.VODitem;
 
-public class Distributor extends VODitem {
+public class Distributor implements VODitem {
     private int id;
     private int salary;
     private int productsCount;

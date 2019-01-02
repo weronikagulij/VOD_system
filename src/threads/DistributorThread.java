@@ -40,30 +40,6 @@ public class DistributorThread implements Runnable {
         }
     }
 
-//    private void createDistributor() throws InterruptedException {
-//        Distributor d = new Distributor(GlobalVariables.distributorsCount);
-//        int currentId = GlobalVariables.distributorsCount;
-//        GlobalVariables.distributorsList.put(currentId, d);
-//        GlobalVariables.distributorsCount ++;
-//
-////        while (true) {
-////         create product
-//            if (Math.random() > GlobalVariables.randomNumbersManager.chanceForProduct(d.getProductsCount()) && Utility.getMaxProducts() >= GlobalVariables.productsList.size()) {
-//                if (GlobalVariables.database.getNextMovie(currentId)) {
-//                    // to do: dodaj 0 tyle razy ile jest miesiecy 0...current month
-//                    for (int j = 0; j < GlobalVariables.month; j++) {
-//                        GlobalVariables.productsList.get(GlobalVariables.productsCount).viewership.add(0);
-//                    }
-//                    GlobalVariables.distributorsList.get(currentId).increaseProducts();
-//                    GlobalVariables.productsCount++;
-//                }
-//            }
-////        }
-//
-//        Thread.sleep(1000);
-//
-//    }
-
     public void start() {
         if (t == null) {
             t = new Thread(this);

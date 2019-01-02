@@ -4,9 +4,8 @@ import single_classes.Promotion;
 import single_classes.VODitem;
 
 import java.util.ArrayList;
-import java.util.Date;
 
-public abstract class Product extends VODitem {
+public abstract class Product implements VODitem {
     private int id;
     private int distributorId;
     private String imageLink;

@@ -90,8 +90,6 @@ public class CustomerThread implements Runnable {
         }
     }
 
-
-
     private void buyMovie(Customer c) {
         // buy only events, livestreaming and movie
         for (Map.Entry<Integer, Product> p: GlobalVariables.productsList.entrySet()) {
@@ -140,16 +138,6 @@ public class CustomerThread implements Runnable {
         }
         System.out.println("User with id " + c.getId() + " buys subs " + c.getSubscription().getVersionName() + "\n");
     }
-
-//    private void addMonthToProductViewership(Product p) {
-//        // increase viewership
-//        if(p.viewership.size() <= GlobalVariables.month ) p.viewership.add(0);
-//    }
-
-//    private void addMonthToProfitBalance() {
-//        if(!GlobalVariables.monthlyProfitBalance.containsKey(GlobalVariables.month))
-//            GlobalVariables.monthlyProfitBalance.put(GlobalVariables.month, (float)0);
-//    }
 
     private boolean productHasPromotion(Product p) {
         if(!Utility.getProductsWithPromotion().contains(p.getClassName())) return false;

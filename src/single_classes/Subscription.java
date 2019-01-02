@@ -4,9 +4,6 @@ import java.util.Date;
 
 public class Subscription {
     private String version;
-//    private Date since;
-//    private Date until;
-//    private int to
     private int devices;
     private int resolutionX;
     private int resolutionY;
@@ -63,14 +60,6 @@ public class Subscription {
     public String getVersionName() {
         return version;
     }
-
-//    public Date getSince() {
-//        return since;
-//    }
-//
-//    public Date getUntil() {
-//        return until;
-//    }
 
     public int getDevices() {
         return devices;

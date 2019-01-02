@@ -7,7 +7,7 @@ import single_classes.VODitem;
 
 import java.util.*;
 
-public class Customer extends VODitem {
+public class Customer implements VODitem {
     private int id;
     private Date birthDate;
     private String email;

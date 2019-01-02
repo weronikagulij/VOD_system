@@ -1,7 +1,5 @@
 package single_classes;
 
-import java.util.Date;
-
 public class Promotion {
 
     private float discount;

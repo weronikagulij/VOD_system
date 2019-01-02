@@ -77,7 +77,7 @@ public class DatabaseManager {
     }
 
     public boolean getNextMovie(int distributorId) {
-        // to do: products cant repeat
+        // to do: products cannot repeat
 
         // randomize id on imdb
         String id = "tt" + Integer.toString( (int)(Math.random() * 7000000 + 1) );
@@ -177,7 +177,6 @@ public class DatabaseManager {
 
         } catch (IOException e) {
             return false;
-//            System.out.println("There was a problem with connection to database. " + e.getMessage());
         }
 
         return true;
