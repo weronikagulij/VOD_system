@@ -76,7 +76,7 @@ public class DatabaseManager {
         durationTime, prodCountry, rating, price, startDate);
     }
 
-    public boolean getNextMovie(HashMap<Integer, Product> productList, Integer productId, int distributorId) {
+    public boolean getNextMovie(int distributorId) {
         // to do: products cant repeat
 
         // randomize id on imdb
@@ -128,7 +128,7 @@ public class DatabaseManager {
                 // 60% chance for creating new movie, 40% for creating new event
                 if(choose > 0.4) {
                     // create movie
-                    productList.put(productId, createNewMovie(productId, distributorId, title, imageLink, description, prodYear, durationTime,
+                    GlobalVariables.productsList.put(GlobalVariables.productsCount, createNewMovie(GlobalVariables.productsCount, distributorId, title, imageLink, description, prodYear, durationTime,
                             prodCountry, rating, actors, genres) );
                 } else {
                     // create event
@@ -145,7 +145,7 @@ public class DatabaseManager {
                         desc = "Meeting with: " + guests;
                     }
 
-                    productList.put(productId, createNewEvent(productId, distributorId, imageLink, name, desc,
+                    GlobalVariables.productsList.put(GlobalVariables.productsCount, createNewEvent(GlobalVariables.productsCount, distributorId, imageLink, name, desc,
                                      durationTime, prodCountry, rating, guests));
 
                 }
@@ -158,7 +158,7 @@ public class DatabaseManager {
                         totalSeasons = (int)(Math.random() * 5 + 1);
                     } else totalSeasons = Integer.parseInt(tempSeasons);
 
-                    productList.put(productId, createNewSeries(productId, distributorId, imageLink, title, description, prodYear,
+                    GlobalVariables.productsList.put(GlobalVariables.productsCount, createNewSeries(GlobalVariables.productsCount, distributorId, imageLink, title, description, prodYear,
                             durationTime, prodCountry, rating, actors, totalSeasons, genres));
             } else {
                 // create livestreaming
@@ -170,7 +170,7 @@ public class DatabaseManager {
                         name = "Playing online '" + title + "'";
                     }
 
-                    productList.put(productId, createNewLivestreaming(productId, distributorId, imageLink, name, description, prodYear,
+                    GlobalVariables.productsList.put(GlobalVariables.productsCount, createNewLivestreaming(GlobalVariables.productsCount, distributorId, imageLink, name, description, prodYear,
                             durationTime, prodCountry, rating) );
             }
 
