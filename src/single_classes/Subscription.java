@@ -87,4 +87,6 @@ public class Subscription {
     public double getProfitability() {
         return profitability;
     }
+
+    public int getPrice() { return price; }
 }

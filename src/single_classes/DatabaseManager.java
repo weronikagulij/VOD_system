@@ -84,7 +84,6 @@ public class DatabaseManager {
 
         // create url by id
         String tempUrl = url + "i=" + id + "&" + APIkey;
-
         try {
             JsonObject obj = objectFromUrl(tempUrl);
             if(obj.get("Response").getAsString().equals("False")) {

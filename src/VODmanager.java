@@ -11,13 +11,15 @@ public class VODmanager {
     private HashMap<Integer, Product> productsList;
     private HashMap<Integer, Customer> customersList;
     private HashMap<Integer, Distributor> distributorsList;
-    private ArrayList<Float> monthlyProfitBalance;
-    private int month; // adding 0.2 with every action
+    private HashMap<Integer, Float> monthlyProfitBalance;
+    private int month;
+    private int day;
     private Integer productsCount;
     private int customersCount;
     private int distributorsCount;
     private DatabaseManager database;
     private RandomNumbersManager randomNumbersManager;
+    private int monthsOfFailure;
 
     private ArrayList<String> productsWithPromotion;
     private ArrayList<String> productsToBuy;
@@ -27,10 +29,11 @@ public class VODmanager {
         customersCount = 0;
         distributorsCount = 0;
         month = 0;
+        day = 0;
         productsList = new HashMap<>();
         customersList = new HashMap<>();
         distributorsList = new HashMap<>();
-        monthlyProfitBalance = new ArrayList<>();
+        monthlyProfitBalance = new HashMap<>();
         randomNumbersManager = new RandomNumbersManager();
 
         productsToBuy  = new ArrayList<>();
@@ -47,39 +50,61 @@ public class VODmanager {
     }
 
     public void startSimulation() {
-        timeManager();
+        try {
+            timeManager();
 
-        // create distributors and their threads
-//        if(Math.random() > randomNumbersManager.chanceForDistributor(distributorsList.size()))
-        System.out.println("chance for distributor: " + randomNumbersManager.chanceForDistributor(distributorsList.size()));
-//            createDistributor();
+            distributorsThread();
+            for (Map.Entry<Integer, Product> pair: productsList.entrySet()) {
+                pair.getValue().writeShort();
+            }
+            customersThread();
+            productsThread();
 
-        for (Map.Entry<Integer, Product> pair: productsList.entrySet()) {
-            pair.getValue().writeShort();
+        } catch (InterruptedException e) {
+            System.out.println("Sorry, there was an error " + e.getMessage());
         }
 
-        // create users and their threads
-        System.out.println("chance for customer: " + randomNumbersManager.chanceForCustomer(productsList.size()));
-//        createCustomer();
-//        if(Math.random() > chance)
-//        showMenu();
+    }
 
-        // randomly set promotion
+    private void distributorsThread() throws InterruptedException {
+//        while(true) {
+            // create distributors and their threads
+            if (Math.random() > randomNumbersManager.chanceForDistributor(distributorsList.size()))
+                createDistributor();
 
-        // randomly remove product
-        if(Math.random() > 1.0 - randomNumbersManager.getDefaultMinimumChance()) {
-             productsList.remove(randomKey(new ArrayList<Integer>(productsList.keySet())));
-        }
+            // randomly remove distributor
+            if (Math.random() > 1.0 - randomNumbersManager.getDefaultMinimumChance()) {
+                distributorsList.remove(randomKey(new ArrayList<Integer>(distributorsList.keySet())));
+            }
 
-        // randomly remove distributor
-        if(Math.random() > 1.0 - randomNumbersManager.getDefaultMinimumChance()) {
-            distributorsList.remove(randomKey(new ArrayList<Integer>(distributorsList.keySet())));
-        }
+            Thread.sleep(1000);
+//        }
+    }
 
-        // randomly remove customer
-        if(Math.random() > 1.0 - randomNumbersManager.getDefaultMinimumChance()) {
-            customersList.remove(randomKey(new ArrayList<Integer>(customersList.keySet())));
-        }
+    private void customersThread() throws InterruptedException {
+//        while (true) {
+            // create users and their threads
+            System.out.println("chance for customer: " + Double.toString(randomNumbersManager.chanceForCustomer(productsList.size())));
+            createCustomer();
+
+            // randomly remove customer
+            if (Math.random() > 1.0 - randomNumbersManager.getDefaultMinimumChance()) {
+                customersList.remove(randomKey(new ArrayList<Integer>(customersList.keySet())));
+            }
+
+            Thread.sleep(100);
+//        }
+    }
+
+    private void productsThread() throws InterruptedException {
+//        while(true) {
+            // randomly remove product
+            if (Math.random() > 1.0 - randomNumbersManager.getDefaultMinimumChance()) {
+                productsList.remove(randomKey(new ArrayList<Integer>(productsList.keySet())));
+            }
+
+            Thread.sleep(1000);
+//        }
     }
 
     private Integer randomKey(ArrayList<Integer> keyList) {
@@ -89,15 +114,16 @@ public class VODmanager {
         return randomKey;
     }
 
-    private void createCustomer() {
+    private void createCustomer() throws InterruptedException {
         int currentId = customersCount;
         Customer c = new Customer(currentId, null, "", "", "" );
         customersList.put(currentId, c);
         customersCount++;
 
-        for(int i = 0; i < 10; i++) {
+//        while (true) {
             randomCustomerBehaviour(c);
-        }
+            Thread.sleep(100);
+//        }
 
     }
 
@@ -132,6 +158,16 @@ public class VODmanager {
         }
     }
 
+    private void addMonthToProductViewership(Product p) {
+        // increase viewership
+        if(p.viewership.size() <= month ) p.viewership.add(0);
+    }
+
+    private void addMonthToProfitBalance() {
+        if(!monthlyProfitBalance.containsKey(month))
+            monthlyProfitBalance.put(month, (float)0);
+    }
+
     private void watchMovie(Customer c, HashMap<Integer, Product> availableMovies) {
         HashMap<Integer, Product> productsToWatch = new HashMap<>();
         if(availableMovies == null) productsToWatch = productsList;
@@ -151,7 +187,8 @@ public class VODmanager {
 
             // watch a product
             if(Math.random() > chance) {
-                // increase viewership
+                addMonthToProductViewership(p.getValue());
+
                 p.getValue().viewership.set(month, p.getValue().viewership.get(month) + 1);
                 System.out.println("User with id " + c.getId() + " is watching " + p.getValue().getName()
                         + " viewership of this movie: " + p.getValue().viewership.get(month) + "\n");
@@ -179,7 +216,14 @@ public class VODmanager {
                     System.out.println("User with id " + c.getId() + " buys: " + p.getValue().getName());
                     // to do: Promotions
                     c.addPurchasedProduct(p.getKey(), p.getValue());
-                    monthlyProfitBalance.set(month, (monthlyProfitBalance.get(month) + p.getValue().getPrice()) );
+
+                    addMonthToProfitBalance();
+
+                    if(productHasPromotion(p.getValue())) {
+                        monthlyProfitBalance.put(month, monthlyProfitBalance.get(month) +
+                                (p.getValue().getPrice() - p.getValue().getPromotion().getDiscount() * p.getValue().getPrice()));
+                    } else
+                        monthlyProfitBalance.put(month, (monthlyProfitBalance.get(month) + p.getValue().getPrice()) );
                     break;
                 }
             }
@@ -202,38 +246,26 @@ public class VODmanager {
         System.out.println("User with id " + c.getId() + " buys subs " + c.getSubscription().getVersionName() + "\n");
     }
 
-    private void createDistributor() {
+    private void createDistributor() throws InterruptedException {
         Distributor d = new Distributor(distributorsCount);
         int currentId = distributorsCount;
         distributorsList.put(currentId, d);
         distributorsCount ++;
 
-        for(int i = 0; i < 10; i++) {
-            double chance = 0.005;
-            if (distributorsCount < 200) chance = 1 / Math.pow(1.25, d.getProductsCount());
-
-            if(Math.random() > 1.0 - chance && Utility.getMaxProducts() <= productsList.size()) {
+//        while (true) {
+            // create product
+            if(Math.random() > randomNumbersManager.chanceForProduct(d.getProductsCount()) && Utility.getMaxProducts() >= productsList.size()) {
                 if (database.getNextMovie(productsList, productsCount, currentId)) {
                     // to do: dodaj 0 tyle razy ile jest miesiecy 0...current month
-                    productsList.get(productsCount).viewership.add(0);
+                    for(int j = 0; j < month; j++ ) {
+                        productsList.get(productsCount).viewership.add(0);
+                    }
                     distributorsList.get(currentId).increaseProducts();
                     productsCount++;
                 }
             }
-        }
 
-//        try {
-//            while (true) {
-//                if(database.getNextMovie(productsList, productsCount, currentId) == true) {
-//                    distributorsList.get(currentId).increaseSalary();
-//                }
-//
-//                System.out.println("Current salary with distributor " + currentId + " equals " +
-//                        distributorsList.get(currentId).getSalary());
-//                Thread.sleep(5000);
-//            }
-//        } catch (InterruptedException e) {
-//            System.out.println("there was a problem with threads.\n");
+            Thread.sleep(1000);
 //        }
 
     }
@@ -325,16 +357,24 @@ public class VODmanager {
         }
     }
 
-    private void timeManager() {
-        monthlyProfitBalance.add((float)0); // starting for the first month
-        for (Map.Entry<Integer, Product> pair: productsList.entrySet()) {
-            pair.getValue().viewership.add(0);
-        }
+    private boolean productHasPromotion(Product p) {
+        if(!productsWithPromotion.contains(p.getClassName())) return false;
+        if (p.getPromotion() == null) return false;
+        if (p.getPromotion().getDiscount() == 0) return false;
+        return true;
+    }
 
-        // to do: if pelny miesiac
+    private void viewershipForAllProducts() {
+        for (Map.Entry<Integer, Product> pair: productsList.entrySet()) {
+            addMonthToProductViewership(pair.getValue());
+        }
+    }
+
+    private void checkPromotions() {
         for (Map.Entry<Integer, Product> pair: productsList.entrySet()) {
             // create promotion with 10% chance
-            if(productsToBuy.contains(pair.getValue().getClassName())) {
+            if(productsWithPromotion.contains(pair.getValue().getClassName())) {
+                // if product does not have a promotion
                 if (pair.getValue().getPromotion() == null || pair.getValue().getPromotion().getDiscount() == 0) {
                     if (Math.random() > 0.9) {
                         int promotion = (int)(Math.random() * 50 + 5);
@@ -345,18 +385,56 @@ public class VODmanager {
                     if(pair.getValue().getPromotion().decreaseDuration() == 0)
                         pair.getValue().getPromotion().reset();
                 }
-
-                // to do
-//                System.out.println("Produkt " + pair.getValue().getName() + " podsiada promocje: " + pair.getValue().getPromotion().getDiscount() +
-//                        " \nCena przed promocja: " + pair.getValue().getPrice() + " \nCena po promocji: " +
-//                        Float.toString(pair.getValue().getPrice() - pair.getValue().getPromotion().getDiscount() * pair.getValue().getPrice()));
             }
         }
     }
+
+    private void timeManager() throws InterruptedException {
+//        while (true) {
+            if (day < 30) {
+                day++;
+            } else {
+                month++;
+                day = 0;
+
+                checkProfitBalance();
+                viewershipForAllProducts();
+                checkPromotions();
+            }
+
+            Thread.sleep(1000);
+//        }
+    }
+
     private void showViewership() {}
-    private void manageProducts() {}
-    private void manageCustomers() {}
-    private void manageDistributors() {}
-    private void checkProfitBalance() {}
-    private void quit() {}
+
+    private void checkProfitBalance() {
+        double income = 0;
+
+        // if monthly profit balance to this month was not created
+        addMonthToProfitBalance();
+
+        for (Map.Entry<Integer, Customer> pair: customersList.entrySet()) {
+            if(pair.getValue().getSubscription() != null) {
+                income += (double) pair.getValue().getSubscription().getPrice();
+            }
+        }
+
+        for (Map.Entry<Integer, Distributor> pair: distributorsList.entrySet()) {
+            income -= (double) pair.getValue().getSalary();
+        }
+
+        monthlyProfitBalance.put(month, (float)(monthlyProfitBalance.get(month) + income));
+
+        if(income < 0) monthsOfFailure ++;
+        else monthsOfFailure = 0;
+
+        if(monthsOfFailure >= 3) quit();
+
+        System.out.println("profit balance: " + monthlyProfitBalance.get(month));
+    }
+
+    private void quit() {
+        System.out.println("przegrales");
+    }
 }

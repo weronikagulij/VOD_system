@@ -15,7 +15,9 @@ public class RandomNumbersManager {
 
     public double chanceForProduct(int distributorsProductCount) {
         double chance = defaultMinimumChance;
-        if (distributorsCount < 200) chance = 1 / Math.pow(1.25, d.getProductsCount());
+        if (distributorsProductCount < 200) chance = 1 / Math.pow(1.25, distributorsProductCount);
+
+        return (1.0 - chance);
     }
 
     public double chanceForCustomer(int productsCount) {
@@ -23,7 +25,7 @@ public class RandomNumbersManager {
         double chance = defaultMinimumChance;
         if (productsCount < 200) chance = 1 / Math.pow(1.01, productsCount);
 
-        return (1.0 - chance);
+        return 0.0;
     }
 
     public double chanceForDistributor(int distributorsCount) {
