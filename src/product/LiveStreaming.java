@@ -21,12 +21,19 @@ public class LiveStreaming extends Product {
     public void randomize_fields() {}
 
     // getters
+    @Override
     public float getPrice() {
         return price;
     }
 
+    @Override
     public Promotion getPromotion() {
         return promotion;
+    }
+
+    @Override
+    public String getStartDate() {
+        return "20.20.20"; // to do
     }
 
     public void setPromotion(int durationMonths, float discount) {

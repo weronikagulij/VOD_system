@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="349.0" prefWidth="500.0" stylesheets="@../styles/products-details.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DetailsController">
+   <children>
+      <VBox layoutX="184.0" layoutY="-25.0" prefHeight="349.0" prefWidth="500.0" style="-fx-background-color: #141414;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox prefHeight="145.0" prefWidth="500.0" spacing="15.0">
+               <children>
+                  <ImageView fx:id="image" fitHeight="116.0" fitWidth="130.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
+                  <VBox prefHeight="116.0" spacing="10.0">
+                     <children>
+                        <Label fx:id="title" prefHeight="20.0" prefWidth="1000.0" style="-fx-text-fill: #fff;" wrapText="true" />
+                        <Label fx:id="description" alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="102.0" prefWidth="324.0" style="-fx-text-fill: #fff;" wrapText="true" />
+                        <HBox prefHeight="15.0" prefWidth="370.0">
+                           <children>
+                              <Label maxWidth="42.0" minWidth="42.0" prefHeight="18.0" prefWidth="42.0" style="-fx-text-fill: #fff;" text="Rating:" />
+                              <Label fx:id="ratingLabel" prefHeight="18.0" prefWidth="32.0" style="-fx-text-fill: #fff;" />
+                              <Label onMouseClicked="#showViewership" styleClass="viewership-anchor" text="see viewership" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets left="15.0" right="15.0" top="15.0" />
+               </padding>
+            </HBox>
+            <GridPane fx:id="gridPane" prefHeight="220.0" prefWidth="500.0" style="-fx-padding: 15;" styleClass="grid-border-bottom">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints maxHeight="128.60001220703126" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="128.60001220703126" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="128.60001220703126" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="128.60001220703126" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="128.60001220703126" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="128.60001220703126" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="128.60001220703126" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="128.60001220703126" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="128.60001220703126" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="128.60001220703126" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label fx:id="durationLabel" prefHeight="18.0" prefWidth="334.0" style="-fx-text-fill: #fff;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label prefHeight="26.0" prefWidth="240.0" style="-fx-text-fill: #fff;" text="Distributor ID:" GridPane.rowIndex="3" />
+                  <Label prefHeight="28.0" prefWidth="240.0" style="-fx-text-fill: #fff;" text="Production country:" GridPane.rowIndex="4" />
+                  <Label fx:id="yearDesc" prefHeight="31.0" prefWidth="240.0" style="-fx-text-fill: #fff;" text="Production year:" GridPane.rowIndex="5" />
+                  <Label fx:id="countryLabel" prefHeight="18.0" prefWidth="400.0" style="-fx-text-fill: #fff;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Label fx:id="distrIdLabel" prefHeight="18.0" prefWidth="388.0" style="-fx-text-fill: #fff;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label fx:id="yearLabel" prefHeight="18.0" prefWidth="342.0" style="-fx-text-fill: #fff;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <Label fx:id="durationDesc" prefHeight="25.0" prefWidth="240.0" style="-fx-text-fill: #fff;" text="Duration time:" GridPane.rowIndex="2" />
+                  <Label prefHeight="26.0" prefWidth="240.0" style="-fx-text-fill: #fff;" text="Type:" GridPane.rowIndex="1" />
+                  <Label fx:id="typeLabel" prefHeight="18.0" prefWidth="349.0" style="-fx-text-fill: #fff;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label fx:id="optionalDesc1" prefHeight="33.0" prefWidth="240.0" style="-fx-text-fill: #fff;" GridPane.rowIndex="6" />
+                  <Label fx:id="optionalDesc2" layoutX="20.0" layoutY="282.0" prefHeight="33.0" prefWidth="240.0" style="-fx-text-fill: #fff;" styleClass="without" GridPane.rowIndex="7" />
+                  <Label fx:id="optionalDesc3" layoutX="20.0" layoutY="304.0" prefHeight="33.0" prefWidth="240.0" style="-fx-text-fill: #fff;" styleClass="without" GridPane.rowIndex="8" />
+                  <Label fx:id="optionalDesc4" layoutX="20.0" layoutY="327.0" prefHeight="33.0" prefWidth="240.0" style="-fx-text-fill: #fff;" styleClass="without" GridPane.rowIndex="9" />
+                  <Label fx:id="optionalLabel1" layoutX="20.0" layoutY="349.0" prefHeight="18.0" prefWidth="386.0" style="-fx-text-fill: #fff;" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <Label fx:id="optionalLabel2" layoutX="260.0" layoutY="282.0" prefHeight="18.0" prefWidth="368.0" style="-fx-text-fill: #fff;" styleClass="without" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <Label fx:id="optionalLabel3" layoutX="260.0" layoutY="304.0" prefHeight="18.0" prefWidth="351.0" style="-fx-text-fill: #fff;" styleClass="without" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                  <Label fx:id="optionalLabel4" layoutX="260.0" layoutY="327.0" prefHeight="18.0" prefWidth="395.0" style="-fx-text-fill: #fff;" styleClass="without" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                  <Label layoutX="20.0" layoutY="40.0" prefHeight="26.0" prefWidth="240.0" style="-fx-text-fill: #fff;" text="Id:" />
+                  <Label fx:id="idLabel" layoutX="20.0" layoutY="20.0" prefHeight="18.0" prefWidth="380.0" style="-fx-text-fill: #fff;" GridPane.columnIndex="1" />
+               </children>
+            </GridPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

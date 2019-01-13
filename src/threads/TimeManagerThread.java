@@ -5,6 +5,7 @@ import single_classes.GlobalVariables;
 import single_classes.Utility;
 import users.Customer;
 import users.Distributor;
+import views.MainView;
 
 import java.util.Map;
 
@@ -18,8 +19,9 @@ public class TimeManagerThread implements Runnable {
 
     public void run() {
         try {
-//        while (true) {
+        while (true) {
             Thread.sleep(Utility.getDayTime());
+
             if (GlobalVariables.day < 30) {
                 GlobalVariables.day++;
             } else {
@@ -31,7 +33,7 @@ public class TimeManagerThread implements Runnable {
                 checkPromotions();
             }
 
-//        }
+        }
         } catch (InterruptedException e) {
             System.out.println("There was an error: " + e.getMessage());
         }
@@ -41,26 +43,30 @@ public class TimeManagerThread implements Runnable {
         double income = 0;
 
         // if monthly profit balance to this month was not created
-        Utility.addMonthToProfitBalance();
+//        Utility.addMonthToProfitBalance();
 
+        // get income from subsciptions
         for (Map.Entry<Integer, Customer> pair: GlobalVariables.customersList.entrySet()) {
-            if(pair.getValue().getSubscription() != null) {
-                income += (double) pair.getValue().getSubscription().getPrice();
+            if(pair.getValue().getSubscriptionItem() != null) {
+                income += (double) pair.getValue().getSubscriptionItem().getPrice();
             }
         }
 
+        // give money to disytibutors
         for (Map.Entry<Integer, Distributor> pair: GlobalVariables.distributorsList.entrySet()) {
             income -= (double) pair.getValue().getSalary();
         }
 
-        GlobalVariables.monthlyProfitBalance.put(GlobalVariables.month, (float)(GlobalVariables.monthlyProfitBalance.get(GlobalVariables.month) + income));
+//        GlobalVariables.monthlyProfitBalance.put(GlobalVariables.month, (float)(GlobalVariables.monthlyProfitBalance.get(GlobalVariables.month) + income));
+//    GlobalVariables.monthlyBalance += income;
+        GlobalVariables.globalBalance += income;
 
         if(income < 0) monthsOfFailure ++;
         else monthsOfFailure = 0;
 
         if(monthsOfFailure >= 3) quit();
 
-        System.out.println("profit balance: " + GlobalVariables.monthlyProfitBalance.get(GlobalVariables.month));
+//        System.out.println("profit balance: " + GlobalVariables.monthlyProfitBalance.get(GlobalVariables.month));
     }
 
     private void viewershipForAllProducts() {
@@ -95,6 +101,7 @@ public class TimeManagerThread implements Runnable {
     public void start() {
         if (t == null) {
             t = new Thread(this);
+//            t.setDaemon(true);
             t.start();
         }
     }

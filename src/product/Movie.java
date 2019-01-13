@@ -24,6 +24,7 @@ public class Movie extends Product {
     public void randomize_fields() {}
 
     // getters
+    @Override
     public String getActors() {
         return actors;
     }
@@ -32,10 +33,12 @@ public class Movie extends Product {
 //        return trailerLinks;
 //    }
 
+    @Override
     public float getPrice() {
         return price;
     }
 
+    @Override
     public Promotion getPromotion() {
         return promotion;
     }
@@ -44,5 +47,6 @@ public class Movie extends Product {
         promotion = new Promotion(durationMonths, discount);
     }
 
+    @Override
     public String getGenres() { return genres; }
 }

@@ -20,6 +20,11 @@ public class Distributor implements VODitem {
         salary += 10;
     }
 
+    public void decreaseProducts() {
+        productsCount --;
+        salary -= 10;
+    }
+
     // getters
     public int getId() {
         return id;

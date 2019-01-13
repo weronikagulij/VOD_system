@@ -3,10 +3,10 @@ package threads;
 import product.Product;
 import single_classes.GlobalVariables;
 import single_classes.Subscription;
+import single_classes.SubscriptionTypes;
 import single_classes.Utility;
 import users.Customer;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,10 +15,9 @@ public class CustomerThread implements Runnable {
 
     public void run() {
         try {
-            int currentId = GlobalVariables.customersCount;
+            int currentId = GlobalVariables.customersList.size();
             Customer c = new Customer(currentId, null, "", "", "" );
             GlobalVariables.customersList.put(currentId, c);
-            GlobalVariables.customersCount++;
 
             while (true) {
                 randomCustomerBehaviour(c);
@@ -36,10 +35,10 @@ public class CustomerThread implements Runnable {
         // subscription can be bought or changed with 20% probability
         if( rand > 0.8 ) {
             buySubscription(c);
-        } else if (c.getSubscription() == null || c.getSubscription().getVersionName().equals("")  || c.getSubscription().getVersionName().equals("none")) {
+        } else if (c.getSubscriptionItem() == null || c.getSubscriptionItem().getVersionName().equals("")  || c.getSubscriptionItem().getVersionName().equals("none")) {
             // 40% chance to watch a purchased movie
-            if(c.getPurchasedProducts() != null && rand > 0.6 && c.getPurchasedProducts().size() > 0) {
-                watchMovie(c, c.getPurchasedProducts());
+            if(c.getPurchasedProductsItems() != null && rand > 0.6 && c.getPurchasedProductsItems().size() > 0) {
+                watchMovie(c, c.getPurchasedProductsItems());
             }
 
             // chance to buy a movie
@@ -50,8 +49,7 @@ public class CustomerThread implements Runnable {
         } else {
             // resign - 5% chance
             if(rand > 0.95) {
-                System.out.println("clear subs\n");
-                c.clearSubscription();
+                clearSubscription(c);
             }
 
             // watch a movie - 80% chance
@@ -95,7 +93,7 @@ public class CustomerThread implements Runnable {
         for (Map.Entry<Integer, Product> p: GlobalVariables.productsList.entrySet()) {
             // check if user arleady have this movie
             // and if product is available to buy
-            if(!c.getPurchasedProducts().containsKey(p.getKey()) && Utility.getProductsToBuy().contains(p.getValue().getClassName())) {
+            if(!c.getPurchasedProductsItems().containsKey(p.getKey()) && Utility.getProductsToBuy().contains(p.getValue().getClassName())) {
                 float score = p.getValue().getRating();
 
                 // the higher rating is, the more probability to buy the movie
@@ -110,17 +108,25 @@ public class CustomerThread implements Runnable {
                     // to do: Promotions
                     c.addPurchasedProduct(p.getKey(), p.getValue());
 
-                    Utility.addMonthToProfitBalance();
+//                    Utility.addMonthToProfitBalance();
 
                     if(productHasPromotion(p.getValue())) {
-                        GlobalVariables.monthlyProfitBalance.put(GlobalVariables.month, GlobalVariables.monthlyProfitBalance.get(GlobalVariables.month) +
-                                (p.getValue().getPrice() - p.getValue().getPromotion().getDiscount() * p.getValue().getPrice()));
+                        GlobalVariables.globalBalance += (p.getValue().getPrice() - p.getValue().getPromotion().getDiscount() * p.getValue().getPrice());
                     } else
-                        GlobalVariables.monthlyProfitBalance.put(GlobalVariables.month, (GlobalVariables.monthlyProfitBalance.get(GlobalVariables.month) + p.getValue().getPrice()) );
+                        GlobalVariables.globalBalance += p.getValue().getPrice();
                     break;
                 }
             }
         }
+    }
+
+    private void clearSubscription(Customer c) {
+        double randSub = Math.random();
+        if( randSub > (SubscriptionTypes.getProfitability(c.getSubscriptionItem().getId()) / 4 ) ) {
+            c.clearSubscription();
+            System.out.println("clear subs\n");
+        }
+
     }
 
     private void buySubscription(Customer c) {
@@ -129,14 +135,14 @@ public class CustomerThread implements Runnable {
         Subscription good = new Subscription(1);
         Subscription best = new Subscription(2);
 
-        if( randSub > (1.0 - worst.getProfitability() ) ) {
-            c.setSubscription(worst);
-        }  else if (randSub > (1.0 - best.getProfitability())) {
-            c.setSubscription(best);
+        if( randSub > (1.0 - SubscriptionTypes.getProfitability(0) ) ) {
+            c.setSubscription(new Subscription(0));
+        }  else if (randSub > (1.0 - SubscriptionTypes.getProfitability(2))) {
+            c.setSubscription(new Subscription(2));
         }  else {
-            c.setSubscription(good);
+            c.setSubscription(new Subscription(1));
         }
-        System.out.println("User with id " + c.getId() + " buys subs " + c.getSubscription().getVersionName() + "\n");
+        System.out.println("User with id " + c.getId() + " buys subs " + c.getSubscriptionItem().getVersionName() + "\n");
     }
 
     private boolean productHasPromotion(Product p) {

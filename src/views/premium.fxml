@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="282.0" prefWidth="535.0" styleClass="container" stylesheets="@../styles/subscription.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PremiumController">
+   <children>
+      <VBox alignment="CENTER" prefHeight="314.0" prefWidth="621.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="184.0" prefWidth="601.0" spacing="15.0">
+               <children>
+                  <VBox alignment="CENTER" layoutX="224.0" layoutY="10.0" maxHeight="220.0" prefHeight="220.0" prefWidth="157.0" spacing="8.0" styleClass="part">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" prefHeight="21.0" prefWidth="157.0" spacing="5.0">
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="71.0" text="Subscription:" />
+                              <Label fx:id="subName0" prefHeight="17.0" prefWidth="63.0" styleClass="title" text="Premium" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="21.0" prefWidth="157.0" spacing="5.0">
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="64.0" text="Resolution:" />
+                              <Label fx:id="res0" prefHeight="17.0" prefWidth="69.0" style="-fx-font-weight: bold;" styleClass="highlighted" text="122 x 233" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="53.0" prefHeight="37.0" prefWidth="189.0" spacing="5.0">
+                           <children>
+                              <Label prefHeight="43.0" prefWidth="131.0" text="Additional account for kids:" wrapText="true" />
+                              <Label fx:id="kids0" prefHeight="17.0" prefWidth="56.0" styleClass="highlighted" text="yes" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="74.0" prefHeight="21.0" prefWidth="157.0" spacing="5.0">
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="45.0" text="Devices:" />
+                              <TextField fx:id="devices0" prefHeight="25.0" prefWidth="40.0" styleClass="highlighted" text="rrrr" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="95.0" prefHeight="21.0" prefWidth="157.0" spacing="5.0">
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="31.0" text="Price:" />
+                              <TextField fx:id="price0" prefHeight="25.0" prefWidth="40.0" styleClass="highlighted" />
+                           </children>
+                        </HBox>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </VBox>
+                  <VBox alignment="CENTER" layoutX="232.0" layoutY="47.0" maxHeight="220.0" prefHeight="173.0" prefWidth="157.0" spacing="8.0" styleClass="part">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" prefHeight="21.0" prefWidth="157.0" spacing="5.0">
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="71.0" text="Subscription:" />
+                              <Label fx:id="subName1" prefHeight="17.0" prefWidth="63.0" styleClass="title" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="21.0" prefWidth="157.0" spacing="5.0">
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="64.0" text="Resolution:" />
+                              <Label fx:id="res1" prefHeight="17.0" prefWidth="69.0" styleClass="highlighted" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="53.0" prefHeight="37.0" prefWidth="189.0" spacing="5.0">
+                           <children>
+                              <Label prefHeight="43.0" prefWidth="131.0" text="Additional account for kids:" wrapText="true" />
+                              <Label fx:id="kids1" prefHeight="17.0" prefWidth="61.0" styleClass="highlighted" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="74.0" prefHeight="21.0" prefWidth="157.0" spacing="5.0">
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="45.0" text="Devices:" />
+                              <TextField fx:id="devices1" prefHeight="25.0" prefWidth="40.0" styleClass="highlighted" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="95.0" prefHeight="21.0" prefWidth="157.0" spacing="5.0">
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="31.0" text="Price:" />
+                              <TextField fx:id="price1" prefHeight="25.0" prefWidth="40.0" styleClass="highlighted" />
+                           </children>
+                        </HBox>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </VBox>
+                  <VBox alignment="CENTER" layoutX="311.0" layoutY="47.0" maxHeight="220.0" prefHeight="220.0" prefWidth="157.0" spacing="8.0" styleClass="part">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" prefHeight="21.0" prefWidth="157.0" spacing="5.0">
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="71.0" text="Subscription:" />
+                              <Label fx:id="subName2" prefHeight="17.0" prefWidth="63.0" styleClass="title" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="21.0" prefWidth="157.0" spacing="5.0">
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="64.0" text="Resolution:" />
+                              <Label fx:id="res2" prefHeight="17.0" prefWidth="69.0" styleClass="highlighted" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="53.0" prefHeight="37.0" prefWidth="189.0" spacing="5.0">
+                           <children>
+                              <Label prefHeight="43.0" prefWidth="131.0" text="Additional account for kids:" wrapText="true" />
+                              <Label fx:id="kids2" prefHeight="17.0" prefWidth="58.0" styleClass="highlighted" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="74.0" prefHeight="21.0" prefWidth="157.0" spacing="5.0">
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="45.0" text="Devices:" />
+                              <TextField fx:id="devices2" prefHeight="25.0" prefWidth="40.0" styleClass="highlighted" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="95.0" prefHeight="21.0" prefWidth="157.0" spacing="5.0">
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="31.0" text="Price:" />
+                              <TextField fx:id="price2" prefHeight="25.0" prefWidth="40.0" styleClass="highlighted" />
+                           </children>
+                        </HBox>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="48.0" prefWidth="601.0" spacing="15.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#confirm" text="Confirm">
+                     <HBox.margin>
+                        <Insets top="20.0" />
+                     </HBox.margin></Button>
+                  <Button mnemonicParsing="false" onAction="#discard" text="Discard">
+                     <HBox.margin>
+                        <Insets top="20.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</AnchorPane>

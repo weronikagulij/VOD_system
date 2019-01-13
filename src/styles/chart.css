@@ -1,0 +1,52 @@
+.chart {
+  -fx-padding: 8px 16px 8px 8px;
+  -fx-background-color: #141414;
+}
+.chart-content {
+  -fx-padding: 5px;
+}
+.chart-plot-background {
+  -fx-background-color: #1f1f1f;
+}
+.chart-horizontal-grid-lines {
+  -fx-stroke: transparent;
+}
+.chart-alternative-row-fill {
+  -fx-fill: rgb(36, 36, 36);
+  -fx-stroke: transparent;
+  -fx-stroke-width: 0;
+}
+.chart-title {
+  -fx-text-fill: #fff;
+  -fx-font-size: 1.6em;
+}
+.chart-plot-background {
+  -fx-background-color: #141414;
+}
+.axis {
+  -fx-font-size: 1.2em;
+  -fx-tick-label-fill: #aaa;
+}
+
+.axis-label {
+  -fx-text-fill: #aaa;
+}
+
+.axis-tick-mark {
+  -fx-stroke: #aaa;
+}
+.axis-minor-tick-mark {
+  -fx-stroke: #aaa;
+}
+
+.chart-line-symbol {
+  -fx-background-color: #aa0000;
+}
+
+.chart-series-line {
+  -fx-stroke: #aa0000;
+  -fx-stroke-width: 5px;
+}
+.chart-vertical-grid-lines {
+  -fx-stroke: transparent;
+}

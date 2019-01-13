@@ -52,6 +52,12 @@ public abstract class Product implements VODitem {
     public void randomize_fields() {}
 
     // getters
+    public String getImageLink() {
+        return imageLink;
+    }
+
+    public int getProdYear() { return prodYear; }
+
     public int getId() {
         return id;
     }
@@ -97,4 +103,12 @@ public abstract class Product implements VODitem {
     public float getPrice() {
         return 0;
     }
+
+    public String getActors() { return ""; }
+
+    public int getNumberOfSeasons() { return 0; }
+
+    public String getStartDate() { return ""; }
+
+    public String getSpecialGuests() {return "";}
 }

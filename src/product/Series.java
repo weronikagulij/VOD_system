@@ -26,10 +26,12 @@ public class Series extends Product {
     public void randomize_fields() {}
 
     // getters
+    @Override
     public String getActors() {
         return actors;
     }
 
+    @Override
     public int getNumberOfSeasons() {
         return numberOfSeasons;
     }
@@ -38,6 +40,7 @@ public class Series extends Product {
         return episodes;
     }
 
+    @Override
     public String getGenres() {
         return genres;
     }

@@ -12,13 +12,15 @@ public class VODitemsThread implements Runnable {
         try {
             //        while(true) {
             // randomly create distributor thread
-            if (Math.random() > GlobalVariables.randomNumbersManager.chanceForDistributor(GlobalVariables.distributorsList.size())) {
-                DistributorThread d = new DistributorThread();
-                d.start();
-            }
+//            if (Math.random() > GlobalVariables.randomNumbersManager.chanceForDistributor(GlobalVariables.distributorsList.size())
+//                && Utility.getMaxDistributors() >= GlobalVariables.distributorsList.size()) {
+//                DistributorThread d = new DistributorThread();
+//                d.start();
+//            }
 
             // randomly create customer thread
-            if ( Math.random() > GlobalVariables.randomNumbersManager.chanceForCustomer(GlobalVariables.productsList.size())) {
+            if ( Math.random() > GlobalVariables.randomNumbersManager.chanceForCustomer(GlobalVariables.productsList.size())
+                && Utility.getMaxCustomers() >= GlobalVariables.customersList.size()) {
                 CustomerThread c = new CustomerThread();
                 c.start();
             }

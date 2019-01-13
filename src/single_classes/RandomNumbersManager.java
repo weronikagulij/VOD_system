@@ -7,7 +7,7 @@ public class RandomNumbersManager {
     private double customersChanceFactor;
 
     public RandomNumbersManager() {
-        defaultMinimumChance = 0.005;
+        defaultMinimumChance = 0.000000001;
         distributorsChanceFactor = 1.1;
         productsChanceFactor = 1.25;
         customersChanceFactor = 1.01;

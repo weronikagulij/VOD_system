@@ -1,5 +1,6 @@
 package single_classes;
 
+import javafx.scene.control.Alert;
 import product.Product;
 
 import java.io.BufferedReader;
@@ -12,38 +13,35 @@ import java.util.Scanner;
 
 public class Utility {
     private static int max_products = 200;
+    private static int max_customers = 1000;
+    private static int max_distributors = 500;
     private static int day_time = 2000;
 
     public static int getDayTime() {
         return day_time;
     }
 
-    public static int inputNumber(int max) {
-        int n;
-        while ((n = checkIfNumber(max)) == 0) {
-            System.out.println("Value is wrong!\n");
-        }
-        return n;
-    }
-
-    private static int checkIfNumber(int max) {
+    public static int checkIfInt(String value) {
+        int res;
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            String s = br.readLine();
-
-            Scanner sc = new Scanner(s.trim());
-            if(!sc.hasNextInt(10)) return 0;
-            sc.nextInt(10);
-            if (sc.hasNext()) return 0;
-
-            int i = Integer.parseInt(s);
-            if(i > 0 && i <= max) return i;
-
-        } catch (IOException e) {
-            System.out.println("Sorry, there was an error: " + e.getMessage());
+            res = Integer.parseInt(value);
+            if(res < 0) return 0;
+            return res;
         }
-
-        return 0;
+        catch(NumberFormatException e) {
+            return 0;
+        }
+    }
+    public static double checkIfDouble(String value) {
+        double res;
+        try {
+            res = Double.parseDouble(value);
+            if(res < 0) return 0;
+            return res;
+        }
+        catch(NumberFormatException e) {
+            return 0;
+        }
     }
 
     public static int getMaxProducts() {
@@ -78,8 +76,25 @@ public class Utility {
         if(p.viewership.size() <= GlobalVariables.month ) p.viewership.add(0);
     }
 
-    public static void addMonthToProfitBalance() {
-        if(!GlobalVariables.monthlyProfitBalance.containsKey(GlobalVariables.month))
-            GlobalVariables.monthlyProfitBalance.put(GlobalVariables.month, (float)0);
+//    public static void addMonthToProfitBalance() {
+//        if(!GlobalVariables.monthlyProfitBalance.containsKey(GlobalVariables.month))
+//            GlobalVariables.monthlyProfitBalance.put(GlobalVariables.month, (float)0);
+//    }
+
+    public static int getMaxCustomers() {
+        return max_customers;
     }
+
+    public static int getMaxDistributors() {
+        return max_distributors;
+    }
+
+    public static void showEmptySelectMessage() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Warning");
+        alert.setHeaderText(null);
+        alert.setContentText("Field must be selected.");
+        alert.showAndWait();
+    }
+
 }

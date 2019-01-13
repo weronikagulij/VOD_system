@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="700.0" styleClass="background" stylesheets="@../styles/chart.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ViewershipController">
+   <children>
+      <LineChart fx:id="ViewershipChart" animated="false" prefHeight="304.0" prefWidth="531.0" styleClass="chart-view" title="Viewership" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-0.20000000000004547" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <xAxis>
+          <CategoryAxis label="Month" side="BOTTOM" fx:id="x" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis fx:id="y" label="Number of views" side="LEFT" />
+        </yAxis>
+         <padding>
+            <Insets right="10.0" />
+         </padding>
+      </LineChart>
+   </children>
+</AnchorPane>

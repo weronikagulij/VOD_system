@@ -1,0 +1,36 @@
+.container {
+  -fx-background-color: #f3f3f3;
+}
+
+.part {
+  -fx-background-color: #e2e2e2;
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 5, 0, 0, 0);
+}
+
+TextField {
+  -fx-background-color: #e2e2e2;
+  -fx-border-color: #bfbfbf;
+}
+
+Label {
+  -fx-text-fill: #666;
+}
+
+.highlighted {
+  -fx-font-weight: bold;
+  -fx-text-fill: #333;
+}
+
+.title {
+  -fx-font-weight: bold;
+  -fx-text-fill: #0080ff;
+}
+
+Button {
+  -fx-text-fill: white;
+  -fx-font-weight: bold;
+  -fx-background-color: #333;
+  -fx-padding: 5px 10px;
+  -fx-border-color: transparent;
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.4), 5, 0, 0, 0);
+}

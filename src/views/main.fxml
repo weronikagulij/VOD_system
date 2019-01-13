@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="800.0" stylesheets="@../styles/table.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
+   <children>
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <HBox fx:id="menuWrapper" alignment="CENTER" prefHeight="81.0" prefWidth="800.0" spacing="10.0" styleClass="menu">
+               <children>
+                  <Label prefWidth="51.0" styleClass="title" text="WERFLIX" />
+                  <Label onMouseClicked="#showPremiumOffer" prefWidth="66.0" styleClass="clickable" text="Subscription" />
+                  <HBox fx:id="menuItem" alignment="CENTER_RIGHT">
+                     <children>
+                        <Label text="Day: " />
+                        <Label fx:id="dayLabel" text="0">
+                           <HBox.margin>
+                              <Insets right="7.0" />
+                           </HBox.margin></Label>
+                        <Label text="Month: " />
+                        <Label fx:id="monthLabel" text="0">
+                           <HBox.margin>
+                              <Insets right="7.0" />
+                           </HBox.margin></Label>
+                        <Label text="Profit balance: " />
+                        <Label fx:id="balanceLabel" text="0" />
+                        <Label text="\$" />
+                     </children>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets bottom="12.0" left="10.0" right="10.0" top="12.0" />
+               </padding>
+            </HBox>
+            <TabPane prefHeight="565.0" styleClass="background" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="Products">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0">
+                           <children>
+                              <AnchorPane layoutX="-4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="487.2" prefWidth="800.0" styleClass="table-wrapper" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <VBox layoutX="-40.0" layoutY="-42.0" prefHeight="420.0" prefWidth="620.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <TextField fx:id="searchField" maxWidth="250.0" onAction="#searchProduct" promptText="Search...">
+                                             <VBox.margin>
+                                                <Insets bottom="10.0" />
+                                             </VBox.margin>
+                                          </TextField>
+                                          <TableView fx:id="productsTable">
+                                            <columns>
+                                              <TableColumn fx:id="idProductsCol" prefWidth="45" text="ID" />
+                                                <TableColumn fx:id="distributorCol" prefWidth="93" text="Distributor ID" />
+                                                <TableColumn fx:id="typeCol" prefWidth="93" text="Type" />
+                                              <TableColumn fx:id="titleCol" minWidth="80.0" text="Title" />
+                                            </columns>
+                                          </TableView>
+                                          <HBox alignment="CENTER" maxHeight="80.0" minHeight="80.0" prefHeight="80.0" spacing="15.0">
+                                             <children>
+                                                <Button mnemonicParsing="false" onAction="#viewDetails" text="View details" />
+                                                <Button alignment="CENTER" mnemonicParsing="false" onAction="#deleteProduct" text="Delete">
+                                                   <opaqueInsets>
+                                                      <Insets />
+                                                   </opaqueInsets>
+                                                </Button>
+                                                <Button fx:id="randomButton" mnemonicParsing="false" onAction="#addRandomProduct" text="Add random product" />
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets />
+                                             </VBox.margin>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                              </AnchorPane>
+                           </children>
+                    </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab text="Customers">
+                  <content>
+                    <AnchorPane prefHeight="456.0">
+                           <children>
+                              <AnchorPane layoutX="40.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="479.3333333333333" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <VBox styleClass="table-wrapper" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <TableView fx:id="customersTable">
+                                            <columns>
+                                                <TableColumn fx:id="idCustomersCol" prefWidth="44.0" text="ID" />
+                                                <TableColumn fx:id="emailCol" prefWidth="130" text="E-mail" />
+                                                <TableColumn fx:id="subscriptionCol" prefWidth="85" text="Subscription" />
+                                                <TableColumn fx:id="genreCol" prefWidth="97" text="Favourite genre" />
+                                                <TableColumn fx:id="productsCol" minWidth="-1.0" text="Purchased products" />
+                                            </columns>
+                                          </TableView>
+                                          <HBox alignment="CENTER" maxHeight="80.0" minHeight="80.0" prefHeight="80.0" prefWidth="780.0" spacing="15.0">
+                                             <children>
+                                                <Button mnemonicParsing="false" onAction="#deleteCustomer" text="Delete" />
+                                                <Button mnemonicParsing="false" onAction="#addRandomCustomer" text="Add random customer" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </padding>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                           </children></AnchorPane>
+                  </content>
+                </Tab>
+                  <Tab text="Distributors">
+                     <content>
+                        <AnchorPane minHeight="0.0">
+                           <children>
+                              <AnchorPane layoutX="79.0" layoutY="27.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="487.2" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                  <children>
+                                    <VBox layoutX="45.0" layoutY="-100.0" styleClass="table-wrapper" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                            <TableView fx:id="distributorsTable" prefHeight="400.0" prefWidth="600.0">
+                                                <columns>
+                                                    <TableColumn fx:id="idDistributorsCol" prefWidth="45" text="ID" />
+                                                    <TableColumn fx:id="countCol" prefWidth="156" text="Count of created products" />
+                                                    <TableColumn fx:id="salaryCol" text="Salary" />
+                                                </columns>
+                                            </TableView>
+                                          <HBox alignment="CENTER" maxHeight="80.0" minHeight="80.0" prefHeight="80.0" spacing="15.0">
+                                             <children>
+                                                <Button mnemonicParsing="false" onAction="#deleteDistributor" text="Delete" />
+                                                <Button mnemonicParsing="false" onAction="#addRandomDistributor" text="Add random distributor" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <padding>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </padding>
+                                    </VBox>
+                                  </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+              </tabs>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </TabPane>
+         </children>
+      </VBox>
+   </children>
+</StackPane>

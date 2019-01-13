@@ -89,8 +89,8 @@ public class Customer implements VODitem {
         return id;
     }
 
-    public Date getBirthDate() {
-        return birthDate;
+    public String getBirthDate() {
+        return "20. 20. 120";
     }
 
     public String getEmail() {
@@ -101,11 +101,26 @@ public class Customer implements VODitem {
         return cardNumber;
     }
 
-    public Subscription getSubscription() {
+    public String getSubscription() {
+        return subscription.getVersionName();
+    }
+
+    public Subscription getSubscriptionItem() {
         return subscription;
     }
 
-    public HashMap< Integer, Product> getPurchasedProducts() {
+    public String getPurchasedProducts() {
+        String products = "";
+        for (Map.Entry<Integer, Product> p : purchasedProducts.entrySet()) {
+            products = String.join(Integer.toString(p.getValue().getId()), ", ");
+        }
+
+        if(products.endsWith(", ")) products = products.substring(0, products.length() - 2);
+
+        return products;
+    }
+
+    public HashMap< Integer, Product> getPurchasedProductsItems() {
         return purchasedProducts;
     }
 

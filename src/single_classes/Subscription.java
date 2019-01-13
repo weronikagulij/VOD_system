@@ -8,32 +8,34 @@ public class Subscription {
     private int resolutionX;
     private int resolutionY;
     private double profitability;
-    private int price;
+    private double price;
     private boolean kids;
+    private int id;
 
     public Subscription(int id) {
         version = "none";
-        kids = false;
-
+        this.id = id;
         switch (id) {
-            case 0: devices = 1;
-                    resolutionX = 720;
-                    resolutionY = 476;
-                    price = 15;
-                    version = "Basic";
+            case 0: devices = SubscriptionTypes.getDevices(0);
+                    resolutionX = SubscriptionTypes.getResolutionX(0);
+                    resolutionY = SubscriptionTypes.getResolutionY(0);
+                    price = SubscriptionTypes.getPrice(0);
+                    version = SubscriptionTypes.getName(0);
+                    kids = SubscriptionTypes.getKids(0);
                     break;
-            case 1: devices = 2;
-                    resolutionX = 1280;
-                    resolutionY = 720;
-                    price = 20;
-                    version = "Family";
-                    kids = true;
+            case 1: devices = SubscriptionTypes.getDevices(1);
+                    resolutionX = SubscriptionTypes.getResolutionX(1);
+                    resolutionY = SubscriptionTypes.getResolutionY(1);
+                    price = SubscriptionTypes.getPrice(1);
+                    version = SubscriptionTypes.getName(1);
+                    kids = SubscriptionTypes.getKids(1);
                     break;
-            case 2: devices = 4;
-                    resolutionX = 1920;
-                    resolutionY = 1080;
-                    price = 35;
-                    version = "Premium";
+            case 2: devices = SubscriptionTypes.getDevices(2);
+                    resolutionX = SubscriptionTypes.getResolutionX(2);
+                    resolutionY = SubscriptionTypes.getResolutionY(2);
+                    price = SubscriptionTypes.getPrice(2);
+                    version = SubscriptionTypes.getName(2);
+                    kids = SubscriptionTypes.getKids(2);
                     break;
             default: {
                         devices = 0;
@@ -44,18 +46,26 @@ public class Subscription {
 
         }
 
-        countProfitability();
+//        countProfitability();
     }
 
-    private void countProfitability() {
-        profitability = (resolutionX * devices) / 10.0 / (double)price / (double)price;
-    }
+//    private void countProfitability() {
+//        profitability = (resolutionX * devices) / 10.0 / (double)price / (double)price;
+//    }
 
-    public void extend() {}
-
-    public void set_values_by_version() {}
+//    public void extend() {}
+//
+//    public void set_values_by_version() {}
 
     // getters
+
+    public int getId() {
+        return id;
+    }
+
+    public boolean getKids() {
+        return kids;
+    }
 
     public String getVersionName() {
         return version;
@@ -73,9 +83,9 @@ public class Subscription {
         return resolutionY;
     }
 
-    public double getProfitability() {
-        return profitability;
-    }
+//    public double getProfitability() {
+//        return profitability;
+//    }
 
-    public int getPrice() { return price; }
+    public double getPrice() { return price; }
 }

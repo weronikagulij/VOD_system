@@ -1,0 +1,19 @@
+.grid-border-bottom Label {
+  -fx-border-width: 0 0 1px 0;
+  -fx-border-color: #333;
+}
+
+.without {
+  -fx-border-width: 0 0 0 0;
+}
+
+.viewership-anchor {
+  -fx-text-fill: #aaa;
+  -fx-border-color: #141414;
+  -fx-border-width: 0 0 1px 0;
+  -fx-cursor: hand;
+}
+
+.viewership-anchor:hover {
+  -fx-border-color: #aaa;
+}
