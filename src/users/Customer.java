@@ -3,11 +3,11 @@ package users;
 import enums.Genres;
 import product.Product;
 import single_classes.Subscription;
-import single_classes.VODitem;
+import single_classes.VODuser;
 
 import java.util.*;
 
-public class Customer implements VODitem {
+public class Customer implements VODuser {
     private int id;
     private Date birthDate;
     private String email;
@@ -15,13 +15,15 @@ public class Customer implements VODitem {
     private Subscription subscription;
     private HashMap<Integer,Product> purchasedProducts;
     private String favouriteGenre;
+    private Thread t;
+
+    private Object subscriptionMonitor = new Object();
+    private Object purchasedProductsMonitor = new Object();
 
     public Customer(int id, Date birthDate, String email, String cardNumber, String favouriteGenre) {
         this.id = id;
         this.subscription = new Subscription(-1);
         this.purchasedProducts = new HashMap<>();
-
-//        System.out.println(Genres.randomGenre().toString());
 
         if (birthDate == null) {
             randomizeFields();
@@ -51,38 +53,29 @@ public class Customer implements VODitem {
         else email += "@gmail.com";
     }
 
-    @Override
-    public void writeShort() {
-        System.out.println("--- Id: " + id + " - " + email + " ---");
-    }
-
-    @Override
-    public void writeAll() {
-        System.out.printf("--- Customer nr " + id + " ---\n"
-        + "Birth date: " + birthDate + "\n"
-        + "E-mail: " + email + "\n"
-        + "Card number: " + cardNumber + "\n"
-        + "Subscription: " + subscription.getVersionName()
-        + "\nPurchased products: ");
-
-        for (Map.Entry<Integer, Product> p : purchasedProducts.entrySet()) {
-            System.out.printf(p.getValue().getId() + " - " + p.getValue().getName() + "\n");
-        }
-
-        System.out.printf("\nFavourite genre: " + favouriteGenre + "\n");
-    }
-
     public void clearSubscription() {
-        this.subscription = null;
+        synchronized (subscriptionMonitor) {
+            this.subscription = null;
+        }
     }
 
     public void setSubscription(Subscription s) {
-        this.subscription = s;
+        synchronized (subscriptionMonitor) {
+            this.subscription = s;
+        }
+    }
+
+    public void setT(Thread t) {
+        this.t = t;
     }
 
     // getters
     public String getFavouriteGenre() {
         return this.favouriteGenre;
+    }
+
+    public Thread getT() {
+        return t;
     }
 
     public int getId() {
@@ -102,29 +95,39 @@ public class Customer implements VODitem {
     }
 
     public String getSubscription() {
-        return subscription.getVersionName();
+        synchronized (subscriptionMonitor) {
+            if(subscription == null) return "none";
+            else return subscription.getVersionName();
+        }
     }
 
     public Subscription getSubscriptionItem() {
-        return subscription;
+        synchronized (subscriptionMonitor) {
+            return subscription;
+        }
     }
 
     public String getPurchasedProducts() {
-        String products = "";
-        for (Map.Entry<Integer, Product> p : purchasedProducts.entrySet()) {
-            products = String.join(Integer.toString(p.getValue().getId()), ", ");
+        synchronized (purchasedProductsMonitor) {
+            String products = "";
+            for (Map.Entry<Integer, Product> p : purchasedProducts.entrySet()) {
+                products = products + Integer.toString(p.getValue().getId()) + ", ";
+            }
+
+            if (products.endsWith(", ")) products = products.substring(0, products.length() - 2);
+            return products;
         }
-
-        if(products.endsWith(", ")) products = products.substring(0, products.length() - 2);
-
-        return products;
     }
 
     public HashMap< Integer, Product> getPurchasedProductsItems() {
-        return purchasedProducts;
+        synchronized (purchasedProductsMonitor) {
+            return purchasedProducts;
+        }
     }
 
     public void addPurchasedProduct(Integer k, Product p) {
-        purchasedProducts.put(k, p);
+        synchronized (purchasedProductsMonitor) {
+            purchasedProducts.put(k, p);
+        }
     }
 }

@@ -5,7 +5,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import single_classes.Subscription;
 import single_classes.SubscriptionTypes;
 import single_classes.Utility;
 

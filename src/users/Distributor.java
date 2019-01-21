@@ -1,28 +1,31 @@
 package users;
 
-import single_classes.VODitem;
+import single_classes.VODuser;
 
-public class Distributor implements VODitem {
+public class Distributor implements VODuser {
     private int id;
     private int salary;
     private int productsCount;
+    private Thread t;
 
     public Distributor(int id) {
         this.productsCount = 0;
         this.id = id;
-        this.salary = 5;
+        this.salary = 20;
     }
-
-    public void randomBehavior() {}
 
     public void increaseProducts() {
         productsCount ++;
-        salary += 10;
+        salary += 15;
     }
 
     public void decreaseProducts() {
         productsCount --;
-        salary -= 10;
+        salary -= 15;
+    }
+
+    public void setT(Thread t) {
+        this.t = t;
     }
 
     // getters
@@ -46,5 +49,9 @@ public class Distributor implements VODitem {
         System.out.printf("--- Distributor nr " + id + " ---\n"
         + "Salary: " + salary + "\n"
         + "Number of created products: " + productsCount + "\n");
+    }
+
+    public Thread getT() {
+        return t;
     }
 }

@@ -8,17 +8,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.ImageViewBuilder;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import product.Product;
-import single_classes.GlobalVariables;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class DetailsController implements Initializable {

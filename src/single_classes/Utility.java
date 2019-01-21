@@ -73,7 +73,7 @@ public class Utility {
 
     public static void addMonthToProductViewership(Product p) {
         // increase viewership
-        if(p.viewership.size() <= GlobalVariables.month ) p.viewership.add(0);
+        if(p.viewership.size() <= GlobalVariables.instance.month ) p.viewership.add(0);
     }
 
 //    public static void addMonthToProfitBalance() {

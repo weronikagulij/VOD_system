@@ -20,11 +20,9 @@ import single_classes.Utility;
 import users.Customer;
 import users.Distributor;
 
-import javax.rmi.CORBA.Util;
 import java.io.IOException;
 import java.net.URL;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -95,15 +93,20 @@ public class MainController implements Initializable {
         distributorsTable.getItems().clear();
         distributorsTable.getItems().removeAll();
 
-        for (Map.Entry<Integer, Distributor> p : GlobalVariables.distributorsList.entrySet()) {
-            distributorsTable.getItems().add(p.getValue()); // tutaj blad
+        HashMap<Integer, Distributor> distributorsList = (HashMap<Integer, Distributor>) GlobalVariables.instance.getDistributorsList().clone();
+
+        for (Map.Entry<Integer, Distributor> p : distributorsList.entrySet()) {
+            distributorsTable.getItems().add(p.getValue());
         }
     }
 
     public void refreshCustomers() {
         customersTable.getItems().clear();
         customersTable.getItems().removeAll();
-        for (Map.Entry<Integer, Customer> p : GlobalVariables.customersList.entrySet()) {
+
+        HashMap<Integer, Customer> customersList = (HashMap<Integer, Customer>) GlobalVariables.instance.getCustomersList().clone();
+
+        for (Map.Entry<Integer, Customer> p : customersList.entrySet()) {
             customersTable.getItems().add(p.getValue());
         }
     }
@@ -116,7 +119,10 @@ public class MainController implements Initializable {
 
     public void addProductsToTable() {
         int i = 0;
-        for (Map.Entry<Integer, Product> p : GlobalVariables.productsList.entrySet()) {
+
+        HashMap<Integer, Product> productsList = (HashMap<Integer, Product>) GlobalVariables.instance.getProductsList().clone();
+
+        for (Map.Entry<Integer, Product> p : productsList.entrySet()) {
             if (i >= productsTable.getItems().size()) {
                 productsTable.getItems().add(new ShortProduct(p.getValue().getId(), p.getValue().getName(), p.getValue().getDistributorId(), p.getValue().getClassName()));
             }
@@ -127,7 +133,10 @@ public class MainController implements Initializable {
 
     public void addCustomersToTable() {
         int i = 0;
-        for (Map.Entry<Integer, Customer> p : GlobalVariables.customersList.entrySet()) {
+
+        HashMap<Integer, Customer> customersList = (HashMap<Integer, Customer>) GlobalVariables.instance.getCustomersList().clone();
+
+        for (Map.Entry<Integer, Customer> p : customersList.entrySet()) {
             if (i >= customersTable.getItems().size()) {
                 customersTable.getItems().add(p.getValue());
             }
@@ -141,9 +150,9 @@ public class MainController implements Initializable {
                 new KeyFrame(
                         Duration.millis(Utility.getDayTime()),
                         event -> {
-                            dayLabel.setText(Integer.toString(GlobalVariables.day));
-                            monthLabel.setText(Integer.toString(GlobalVariables.month));
-                            balanceLabel.setText(Integer.toString(GlobalVariables.globalBalance));
+                            dayLabel.setText(Integer.toString(GlobalVariables.instance.day));
+                            monthLabel.setText(Integer.toString(GlobalVariables.instance.month));
+                            balanceLabel.setText(Integer.toString(GlobalVariables.instance.globalBalance));
                             addProductsToTable();
                             addCustomersToTable();
                         }
@@ -158,7 +167,10 @@ public class MainController implements Initializable {
     public void refreshProducts(String pattern) {
         productsTable.getItems().clear();
         productsTable.getItems().removeAll();
-        for (Map.Entry<Integer, Product> p : GlobalVariables.productsList.entrySet()) {
+
+        HashMap<Integer, Product> productsList = (HashMap<Integer, Product>) GlobalVariables.instance.getProductsList().clone();
+
+        for (Map.Entry<Integer, Product> p : productsList.entrySet()) {
             if (p.getValue().getName().toLowerCase().contains(pattern.toLowerCase())
                     || Integer.toString(p.getValue().getId()).equals(pattern.toLowerCase().replace(" ", ""))) {
                 productsTable.getItems().add(new ShortProduct(p.getValue().getId(), p.getValue().getName(), p.getValue().getDistributorId(), p.getValue().getClassName()));
@@ -177,7 +189,7 @@ public class MainController implements Initializable {
                 Parent parent = fxmlLoader.load();
                 DetailsController controller = fxmlLoader.getController();
 
-                controller.setProduct(GlobalVariables.productsList.get(shortProduct.getId()));
+                controller.setProduct(GlobalVariables.instance.getProductsList().get(shortProduct.getId()));
 
                 Stage stage = new Stage();
                 stage.setTitle("Product details");
@@ -195,9 +207,9 @@ public class MainController implements Initializable {
         ShortProduct shortProduct = productsTable.getSelectionModel().getSelectedItem();
 
         if(shortProduct != null) {
-            GlobalVariables.removeProduct(shortProduct.getId());
+            GlobalVariables.instance.removeProduct(shortProduct.getId());
             refreshProducts("");
-            showDeleteMessage("Product");
+            successAlert("Product was succesfully deleted.");
         } else {
             Utility.showEmptySelectMessage();
         }
@@ -207,29 +219,29 @@ public class MainController implements Initializable {
         int id = 0;
         randomButton.setDisable(true);
 
+        // to ask: czy to dac do osobnego watku?
+        if(GlobalVariables.instance.getDistributorsList().size() == 0) {
+            errorAlert("You have no distributors!");
+            randomButton.setDisable(false);
+            return;
+        }
+
         // retry to connect 3 times to not wait indefinitely
         for(int i = 0; i < 3; i ++) {
-            Object randomKey = GlobalVariables.distributorsList.keySet().toArray()[new Random().nextInt(GlobalVariables.distributorsList.keySet().toArray().length)];
-            id = GlobalVariables.addProduct(Integer.parseInt(randomKey.toString()));
+            Object randomKey = GlobalVariables.instance.getDistributorsList().keySet().toArray()[new Random().nextInt(GlobalVariables.instance.getDistributorsList().keySet().toArray().length)];
+            id = GlobalVariables.instance.addProduct(Integer.parseInt(randomKey.toString()));
             if (id != 0) break;
         }
 
-        Alert alert;
         if(id != 0) {
-            Product added = GlobalVariables.productsList.get(id);
+            Product added = GlobalVariables.instance.getProductsList().get(id);
             refreshProducts("");
 
-            alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Added");
-            alert.setContentText("Product was successfully added. Details: \n" + added.getId() + " - " + added.getName());
+            successAlert("Product was successfully added. Details: \n" + added.getId() + " - " + added.getName());
         } else {
-            alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setContentText("Product could not be added due to network connection. Try again.");
+            errorAlert("Product could not be added due to network connection. Try again.");
         }
 
-        alert.setHeaderText(null);
-        alert.showAndWait();
 
         randomButton.setDisable(false);
     }
@@ -239,18 +251,18 @@ public class MainController implements Initializable {
         Distributor customer = distributorsTable.getSelectionModel().getSelectedItem();
 
         if(customer != null) {
-            GlobalVariables.removeDistributor(customer.getId());
+            GlobalVariables.instance.removeDistributor(customer.getId());
            refreshDistributors();
-            showDeleteMessage("Distributor");
+            successAlert("Distributor was succesfully deleted.");
         } else {
             Utility.showEmptySelectMessage();
         }
     }
 
     public void addRandomDistributor(ActionEvent actionEvent) {
-        int id = GlobalVariables.addDistributor();
+        int id = GlobalVariables.instance.addDistributor();
         refreshDistributors();
-        showAddMessage("Distributor", id);
+        successAlert("Distributor was successfully added.\nId of added distributor: " + Integer.toString(id));
     }
 
     // customers methods
@@ -258,18 +270,18 @@ public class MainController implements Initializable {
         Customer customer = customersTable.getSelectionModel().getSelectedItem();
 
         if(customer != null) {
-            GlobalVariables.removeCustomer(customer.getId());
+            GlobalVariables.instance.removeCustomer(customer.getId());
             refreshCustomers();
-            showDeleteMessage("Customer");
+            successAlert("Customer was successfully deleted.");
         } else {
             Utility.showEmptySelectMessage();
         }
     }
 
     public void addRandomCustomer(ActionEvent actionEvent) {
-        int id = GlobalVariables.addCustomer();
+        int id = GlobalVariables.instance.addCustomer();
         refreshCustomers();
-        showAddMessage("Customer", id);
+        successAlert("Customer was successfully added.\nId of added customer: " + Integer.toString(id));
     }
 
     public void searchProduct(ActionEvent actionEvent) {
@@ -289,20 +301,26 @@ public class MainController implements Initializable {
         }
     }
 
-
-    public static void showDeleteMessage(String type) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Delete");
+    private void successAlert(String msg) {
+        Alert alert;
+        alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Success");
+        alert.setContentText(msg);
         alert.setHeaderText(null);
-        alert.setContentText(type + " was successfully deleted.");
         alert.showAndWait();
     }
 
-    public static void showAddMessage(String type, int id) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Add");
+    private void errorAlert(String msg) {
+        Alert alert;
+        alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setContentText(msg);
         alert.setHeaderText(null);
-        alert.setContentText(type + " was successfully added.\nId of added " + type.toLowerCase() + ": " + Integer.toString(id));
         alert.showAndWait();
+    }
+
+    public void refreshAllTable(ActionEvent actionEvent) {
+        refreshCustomers();
+        refreshDistributors();
     }
 }

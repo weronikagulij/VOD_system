@@ -7,6 +7,7 @@ import users.Customer;
 import users.Distributor;
 import views.MainView;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class TimeManagerThread implements Runnable {
@@ -22,11 +23,11 @@ public class TimeManagerThread implements Runnable {
         while (true) {
             Thread.sleep(Utility.getDayTime());
 
-            if (GlobalVariables.day < 30) {
-                GlobalVariables.day++;
+            if (GlobalVariables.instance.day < 30) {
+                GlobalVariables.instance.day++;
             } else {
-                GlobalVariables.month++;
-                GlobalVariables.day = 0;
+                GlobalVariables.instance.month++;
+                GlobalVariables.instance.day = 0;
 
                 checkProfitBalance();
                 viewershipForAllProducts();
@@ -46,20 +47,25 @@ public class TimeManagerThread implements Runnable {
 //        Utility.addMonthToProfitBalance();
 
         // get income from subsciptions
-        for (Map.Entry<Integer, Customer> pair: GlobalVariables.customersList.entrySet()) {
+        HashMap<Integer, Customer> customersList = (HashMap<Integer, Customer>) GlobalVariables.instance.getCustomersList().clone();
+
+        for (Map.Entry<Integer, Customer> pair: customersList.entrySet()) {
             if(pair.getValue().getSubscriptionItem() != null) {
                 income += (double) pair.getValue().getSubscriptionItem().getPrice();
             }
         }
 
         // give money to disytibutors
-        for (Map.Entry<Integer, Distributor> pair: GlobalVariables.distributorsList.entrySet()) {
+
+        HashMap<Integer, Distributor> distributorsList = (HashMap<Integer, Distributor>) GlobalVariables.instance.getDistributorsList().clone();
+
+        for (Map.Entry<Integer, Distributor> pair: distributorsList.entrySet()) {
             income -= (double) pair.getValue().getSalary();
         }
 
 //        GlobalVariables.monthlyProfitBalance.put(GlobalVariables.month, (float)(GlobalVariables.monthlyProfitBalance.get(GlobalVariables.month) + income));
 //    GlobalVariables.monthlyBalance += income;
-        GlobalVariables.globalBalance += income;
+        GlobalVariables.instance.globalBalance += income;
 
         if(income < 0) monthsOfFailure ++;
         else monthsOfFailure = 0;
@@ -70,13 +76,15 @@ public class TimeManagerThread implements Runnable {
     }
 
     private void viewershipForAllProducts() {
-        for (Map.Entry<Integer, Product> pair: GlobalVariables.productsList.entrySet()) {
+        HashMap<Integer, Product> productsList = (HashMap<Integer, Product>) GlobalVariables.instance.getProductsList().clone();
+        for (Map.Entry<Integer, Product> pair: productsList.entrySet()) {
             Utility.addMonthToProductViewership(pair.getValue());
         }
     }
 
     private void checkPromotions() {
-        for (Map.Entry<Integer, Product> pair: GlobalVariables.productsList.entrySet()) {
+        HashMap<Integer, Product> productsList = (HashMap<Integer, Product>) GlobalVariables.instance.getProductsList().clone();
+        for (Map.Entry<Integer, Product> pair: productsList.entrySet()) {
             // create promotion with 10% chance
             if(Utility.getProductsWithPromotion().contains(pair.getValue().getClassName())) {
                 // if product does not have a promotion

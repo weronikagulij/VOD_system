@@ -6,7 +6,6 @@ import com.google.gson.JsonParser;
 import product.*;
 
 import java.io.*;
-import java.lang.invoke.CallSite;
 import java.net.URLConnection;
 import java.util.*;
 
@@ -21,9 +20,9 @@ public class DatabaseManager {
     private String url;
 
     public DatabaseManager() {
-//        f576cf93
+
         url = "http://www.omdbapi.com/?";
-        APIkey = "apikey=8b9932f5";
+        APIkey = "apikey=8b9932f5";     // alternative - f576cf93
     }
 
     private JsonObject objectFromUrl(String tempUrl) throws IOException {
@@ -44,36 +43,36 @@ public class DatabaseManager {
         return rootobj;
     }
 
-    private Event createNewEvent(int id, int distributorId, String imageLink, String name, String description,
+    private Event createNewEvent( int distributorId, String imageLink, String name, String description,
                                  String durationTime, String prodCountry, float rating, String specialGuests) {
 
         Date d = new Date(System.currentTimeMillis() + (int)(Math.random() * 1000000000 + 1000));
         int entryPrice = (int)(Math.random() * 200 + 50);
 
-        return new Event(id, distributorId, imageLink, name, description,
+        return new Event(distributorId, imageLink, name, description,
                 durationTime, prodCountry, rating, entryPrice, specialGuests, d);
     }
 
-    private Movie createNewMovie(int productId, int distributorId, String title, String imageLink, String description, int prodYear, String durationTime,
+    private Movie createNewMovie(int distributorId, String title, String imageLink, String description, int prodYear, String durationTime,
                                  String prodCountry, float rating, String actors, String genres) {
-        return  new Movie(productId, distributorId, imageLink, title, description, prodYear,
+        return  new Movie( distributorId, imageLink, title, description, prodYear,
         durationTime, prodCountry, rating, actors, (int)(Math.random() * 30 + 5), genres);
     }
 
-    private Series createNewSeries(int id, int distributorId, String imageLink, String name, String description, int prodDate,
+    private Series createNewSeries(int distributorId, String imageLink, String name, String description, int prodDate,
                                    String durationTime, String prodCountry, float rating, String actors, int numberOfSeasons, String genres) {
 
-        return new Series(id, distributorId, imageLink, name, description, prodDate,
+        return new Series(distributorId, imageLink, name, description, prodDate,
         durationTime, prodCountry, rating, actors, numberOfSeasons, genres);
     }
 
-    private LiveStreaming createNewLivestreaming(int id, int distributorId, String imageLink, String name, String description,
+    private LiveStreaming createNewLivestreaming(int distributorId, String imageLink, String name, String description,
                                                  int prodDate, String durationTime, String prodCountry, float rating) {
 
         Date startDate = new Date(System.currentTimeMillis() + (int)(Math.random() * 1000000000 + 1000));
         int price = (int)(Math.random() * 100 + 50);
 
-        return new LiveStreaming(id, distributorId, imageLink, name, description, prodDate,
+        return new LiveStreaming(distributorId, imageLink, name, description, prodDate,
         durationTime, prodCountry, rating, price, startDate);
     }
 
@@ -124,20 +123,18 @@ public class DatabaseManager {
                 rating = (float)(Math.random() * 5 + 1);
             } else rating = Float.parseFloat(temp);
 
-            int size = GlobalVariables.productsCount;
-
+            int createdId;
             if(obj.get("Type").getAsString().equals("movie")) {
                 double choose = Math.random();
                 // 70% chance for creating new movie, 30% for creating new event
                 if(choose > 0.3) {
                     // create movie
-                    GlobalVariables.productsList.put(size, createNewMovie(size, distributorId, title, imageLink, description, prodYear, durationTime,
-                            prodCountry, rating, actors, genres) );
-                    GlobalVariables.productsCount ++;
-                    return size;
+                    createdId = GlobalVariables.instance.addProduct(createNewMovie(distributorId, title, imageLink, description, prodYear, durationTime,
+                            prodCountry, rating, actors, genres));
+                    return createdId;
                 } else {
                     // create event
-                    // what kind of event? 50% chance for meeting with actors, 50% for meeting with director
+                    // kind of event - 50% chance for meeting with actors, 50% for meeting with director
                     double second_choose = Math.random();
                     String name, desc, guests;
                     if(second_choose > 0.5) {
@@ -150,10 +147,9 @@ public class DatabaseManager {
                         desc = "Meeting with: " + guests;
                     }
 
-                    GlobalVariables.productsList.put(size, createNewEvent(size, distributorId, imageLink, name, desc,
+                    createdId = GlobalVariables.instance.addProduct(createNewEvent(distributorId, imageLink, name, desc,
                                      durationTime, prodCountry, rating, guests));
-                    GlobalVariables.productsCount ++;
-                    return size;
+                    return createdId;
                 }
             } else if (obj.get("Type").getAsString().equals("series")) {
                     int totalSeasons;
@@ -164,10 +160,9 @@ public class DatabaseManager {
                         totalSeasons = (int)(Math.random() * 5 + 1);
                     } else totalSeasons = Integer.parseInt(tempSeasons);
 
-                    GlobalVariables.productsList.put(size, createNewSeries(size, distributorId, imageLink, title, description, prodYear,
+                createdId = GlobalVariables.instance.addProduct(createNewSeries(distributorId, imageLink, title, description, prodYear,
                             durationTime, prodCountry, rating, actors, totalSeasons, genres));
-                GlobalVariables.productsCount ++;
-                    return size;
+                return createdId;
             } else {
                 // create livestreaming
                     String name;
@@ -178,10 +173,9 @@ public class DatabaseManager {
                         name = "Playing online '" + title + "'";
                     }
 
-                    GlobalVariables.productsList.put(size, createNewLivestreaming(size, distributorId, imageLink, name, description, prodYear,
-                            durationTime, prodCountry, rating) );
-                GlobalVariables.productsCount ++;
-                    return size;
+                createdId = GlobalVariables.instance.addProduct(createNewLivestreaming(distributorId, imageLink, name, description, prodYear,
+                            durationTime, prodCountry, rating));
+                    return createdId;
             }
         } catch (IOException e) {
             return 0;

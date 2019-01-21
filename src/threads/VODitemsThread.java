@@ -10,23 +10,15 @@ public class VODitemsThread implements Runnable {
 
     public void run() {
         try {
-            //        while(true) {
-            // randomly create distributor thread
-//            if (Math.random() > GlobalVariables.randomNumbersManager.chanceForDistributor(GlobalVariables.distributorsList.size())
-//                && Utility.getMaxDistributors() >= GlobalVariables.distributorsList.size()) {
-//                DistributorThread d = new DistributorThread();
-//                d.start();
-//            }
-
+            while(true) {
             // randomly create customer thread
-            if ( Math.random() > GlobalVariables.randomNumbersManager.chanceForCustomer(GlobalVariables.productsList.size())
-                && Utility.getMaxCustomers() >= GlobalVariables.customersList.size()) {
-                CustomerThread c = new CustomerThread();
-                c.start();
+            if ( Math.random() > GlobalVariables.instance.randomNumbersManager.chanceForCustomer()
+                && Utility.getMaxCustomers() >= GlobalVariables.instance.getCustomersList().size()) {
+                GlobalVariables.instance.addCustomer();
             }
 
-            Thread.sleep(1000);
-//        }
+            Thread.sleep(Utility.getDayTime() * 2 );
+        }
         } catch (InterruptedException e) {
             System.out.println("There was an error: " + e.getMessage());
         }

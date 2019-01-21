@@ -1,11 +1,7 @@
 package product;
 
-
-import enums.Genres;
 import single_classes.Episode;
-
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Series extends Product {
     private String actors;
@@ -13,9 +9,9 @@ public class Series extends Product {
     private ArrayList<Episode> episodes;
     private String genres;
 
-    public Series(int id, int distributorId, String imageLink, String name, String description, int prodDate,
+    public Series(int distributorId, String imageLink, String name, String description, int prodDate,
            String durationTime, String prodCountry, float rating, String actors, int numberOfSeasons, String genres) {
-        super(id, distributorId, imageLink, name, description, prodDate, durationTime, prodCountry, rating);
+        super(distributorId, imageLink, name, description, prodDate, durationTime, prodCountry, rating);
 
         this.actors = actors;
         this.numberOfSeasons = numberOfSeasons;

@@ -1,11 +1,11 @@
 package product;
 
 import single_classes.Promotion;
-import single_classes.VODitem;
+import single_classes.VODuser;
 
 import java.util.ArrayList;
 
-public abstract class Product implements VODitem {
+public abstract class Product {
     private int id;
     private int distributorId;
     private String imageLink;
@@ -17,10 +17,9 @@ public abstract class Product implements VODitem {
     private float rating;
     public ArrayList<Integer> viewership;
 
-    public Product(int id, int distributorId, String imageLink, String name, String description, int prodDate,
+    public Product(int distributorId, String imageLink, String name, String description, int prodDate,
                    String durationTime, String prodCountry, float rating) {
 
-            this.id = id;
             this.distributorId = distributorId;
             this.imageLink = imageLink;
             this.name = name;
@@ -30,6 +29,10 @@ public abstract class Product implements VODitem {
             this.prodCountry = prodCountry;
             this.rating = rating;
             this.viewership = new ArrayList<>();
+    }
+
+    public void setid(int id) {
+        this.id = id;
     }
 
     public void watch() {}

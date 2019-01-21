@@ -105,11 +105,12 @@
                                                 <TableColumn fx:id="emailCol" prefWidth="130" text="E-mail" />
                                                 <TableColumn fx:id="subscriptionCol" prefWidth="85" text="Subscription" />
                                                 <TableColumn fx:id="genreCol" prefWidth="97" text="Favourite genre" />
-                                                <TableColumn fx:id="productsCol" minWidth="-1.0" text="Purchased products" />
+                                                <TableColumn fx:id="productsCol" minWidth="-1.0" text="Id's od purchased products" />
                                             </columns>
                                           </TableView>
                                           <HBox alignment="CENTER" maxHeight="80.0" minHeight="80.0" prefHeight="80.0" prefWidth="780.0" spacing="15.0">
                                              <children>
+                                                <Button mnemonicParsing="false" onAction="#refreshAllTable" text="Refresh" />
                                                 <Button mnemonicParsing="false" onAction="#deleteCustomer" text="Delete" />
                                                 <Button mnemonicParsing="false" onAction="#addRandomCustomer" text="Add random customer" />
                                              </children>
@@ -141,6 +142,7 @@
                                             </TableView>
                                           <HBox alignment="CENTER" maxHeight="80.0" minHeight="80.0" prefHeight="80.0" spacing="15.0">
                                              <children>
+                                                <Button mnemonicParsing="false" onAction="#refreshAllTable" text="Refresh" />
                                                 <Button mnemonicParsing="false" onAction="#deleteDistributor" text="Delete" />
                                                 <Button mnemonicParsing="false" onAction="#addRandomDistributor" text="Add random distributor" />
                                              </children>

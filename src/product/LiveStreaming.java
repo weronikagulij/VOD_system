@@ -2,6 +2,8 @@ package product;
 
 import single_classes.Promotion;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class LiveStreaming extends Product {
@@ -9,9 +11,9 @@ public class LiveStreaming extends Product {
     private Promotion promotion;
     private Date startDate;
 
-    public LiveStreaming(int id, int distributorId, String imageLink, String name, String description, int prodDate,
+    public LiveStreaming(int distributorId, String imageLink, String name, String description, int prodDate,
                   String durationTime, String prodCountry, float rating, float price, Date startDate ) {
-        super(id, distributorId, imageLink, name, description, prodDate, durationTime, prodCountry, rating);
+        super(distributorId, imageLink, name, description, prodDate, durationTime, prodCountry, rating);
 
         this.promotion = null;
         this.price = price;
@@ -33,7 +35,9 @@ public class LiveStreaming extends Product {
 
     @Override
     public String getStartDate() {
-        return "20.20.20"; // to do
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        String reportDate = df.format(startDate);
+        return reportDate;
     }
 
     public void setPromotion(int durationMonths, float discount) {
