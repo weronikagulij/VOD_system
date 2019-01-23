@@ -3,8 +3,10 @@ package controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import single_classes.SubscriptionTypes;
 import single_classes.Utility;
 
@@ -27,6 +29,7 @@ public class PremiumController implements Initializable {
     public Label kids2;
     public TextField devices2;
     public TextField price2;
+    public Button closeButton;
 
     public void initLabels() {
         subName0.setText(SubscriptionTypes.getName(0));
@@ -82,5 +85,7 @@ public class PremiumController implements Initializable {
 
     public void discard(ActionEvent actionEvent) {
         initChanging();
+        Stage stage = (Stage) closeButton.getScene().getWindow();
+        stage.close();
     }
 }

@@ -142,7 +142,7 @@
                      <HBox.margin>
                         <Insets top="20.0" />
                      </HBox.margin></Button>
-                  <Button mnemonicParsing="false" onAction="#discard" text="Discard">
+                  <Button fx:id="closeButton" mnemonicParsing="false" onAction="#discard" text="Discard">
                      <HBox.margin>
                         <Insets top="20.0" />
                      </HBox.margin>
