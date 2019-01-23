@@ -22,7 +22,7 @@ public class DatabaseManager {
     public DatabaseManager() {
 
         url = "http://www.omdbapi.com/?";
-        APIkey = "apikey=8b9932f5";     // alternative - f576cf93
+        APIkey = "apikey=8b9932f5";
     }
 
     private JsonObject objectFromUrl(String tempUrl) throws IOException {
