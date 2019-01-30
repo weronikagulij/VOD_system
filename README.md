@@ -5,13 +5,13 @@ Distributors can create videos depending on the amount they have already created
 
 I've implemented multithreading to simulate customers and distributors behaviour.
 
-![alt text](https://raw.githubusercontent.com/wjankowska/screenshots/master/vod1.png?token=Afbc2eEshiWOl5Bdv5bVLFyPzXBne7QLks5cUacpwA%3D%3D)
+![alt text](https://raw.githubusercontent.com/wjankowska/screenshots/master/vod1.png)
 
-![alt text](https://raw.githubusercontent.com/wjankowska/screenshots/master/vod1a.png?token=Afbc2ReOdPF3ktCS5eRhoKW0nwntI35Jks5cUadDwA%3D%3D)
+![alt text](https://raw.githubusercontent.com/wjankowska/screenshots/master/vod1a.png)
 
-![alt text](https://raw.githubusercontent.com/wjankowska/screenshots/master/vod2.png?token=Afbc2RmKXi25Ib2rihOOyIHpiOJDrIRpks5cUadawA%3D%3D)
+![alt text](https://raw.githubusercontent.com/wjankowska/screenshots/master/vod2.png)
 
-![alt text](https://raw.githubusercontent.com/wjankowska/screenshots/master/vod2a.png?token=Afbc2RsizBR8YQ7_yY3WIiy8j_zunD8_ks5cUadywA%3D%3D)
+![alt text](https://raw.githubusercontent.com/wjankowska/screenshots/master/vod2a.png)
 
-![alt text](https://raw.githubusercontent.com/wjankowska/screenshots/master/vod3.png?token=Afbc2Z6LpY33o-fR70fO1pSy8mRfTtjBks5cUad_wA%3D%3D)
+![alt text](https://raw.githubusercontent.com/wjankowska/screenshots/master/vod3.png)
 
